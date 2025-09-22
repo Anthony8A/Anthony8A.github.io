@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti</title>
+    <link rel="stylesheet" href="confesion.css">
+</head>
+<body>
+
+    <div id="sticker-container"></div>
+    <div id="welcome-screen" class="welcome-screen">
+        <p>Toca para ver un mensaje, bueno no pero si</p>
+    </div>
+
+    <div class="video-container hidden-container">
+        <div id="confession-text" class="confession-text hidden">"¿Quieres ser mi polola?"</div>
+        
+        <div id="central-heart" class="central-heart hidden">
+            <div id="love-messages-container"></div>
+            <div class="heart-image hidden">
+                <img src="assets/genshin.png" alt="Sticker de Genshin">
+            </div>
+        </div>
+    </div>
+
+    <div id="music-player" class="music-player hidden-player">
+        <div id="play-pause-btn" class="play-pause-btn">
+            <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg id="pause-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+        </div>
+        <div class="song-info">
+            <span class="song-title">te amo...</span>
+        </div>
+        <div class="progress-bar-container">
+            <span id="current-time">0:00</span>
+            <div id="progress-bar" class="progress-bar"></div>
+            <span id="duration">0:00</span>
+        </div>
+    </div>
+
+    <audio id="background-song" src="assets/cancion.mp3"></audio>
+
+    <script src="confesion.js"></script>
+</body>
+</html>

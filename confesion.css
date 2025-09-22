@@ -1,0 +1,283 @@
+/* --- Background and general settings (no changes) --- */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0e0e0;
+}
+
+/* Nueva pantalla de bienvenida */
+.welcome-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0c001c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: opacity 1s ease-out;
+}
+
+.welcome-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Clases para ocultar/mostrar elementos */
+.hidden-container, .hidden-player {
+    opacity: 0;
+    pointer-events: none;
+}
+.show-container, .show-player {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 1s ease-in;
+}
+
+/* --- Confession elements (no changes) --- */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #0c001c;
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                      radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                      radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+                      radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    animation: twinkle 5s infinite linear;
+}
+
+@keyframes twinkle {
+    from { background-position: 0 0, 40px 60px, 130px 270px, 70px 100px; }
+    to { background-position: -550px 0, -310px 60px, -120px 270px, -80px 100px; }
+}
+
+.confession-text {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    color: #e0e0e0;
+    font-size: 2rem;
+    text-align: center;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transition: opacity 1.5s ease-in, transform 1.5s ease-in;
+    z-index: 5;
+}
+.confession-text.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.central-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    width: 0;
+    height: 0;
+    background-color: red;
+    box-shadow: 0 0 50px red, 0 0 80px darkred;
+    opacity: 0;
+    animation: central-heart-grow 2s ease-in forwards;
+    z-index: 1;
+}
+.central-heart::before, .central-heart::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    border-radius: 50%;
+    box-shadow: 0 0 50px red;
+}
+.central-heart::before { top: -50%; left: 0; }
+.central-heart::after { top: 0; left: 50%; }
+
+@keyframes central-heart-grow {
+    to {
+        width: 150px;
+        height: 150px;
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}
+
+#love-messages-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 1px;
+    z-index: 2;
+}
+
+.chat-bubble {
+    position: absolute;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    user-select: none;
+    pointer-events: none;
+    opacity: 0;
+    white-space: nowrap;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: drop-in 4s ease-out forwards;
+    left: var(--x-pos);
+    top: var(--y-pos);
+    transform: rotate(var(--rotation, 0deg));
+}
+
+@keyframes drop-in {
+    0% {
+        transform: translateY(-200px) scale(0.5) rotate(var(--rotation, 0deg));
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(0) scale(1.1) rotate(var(--rotation, 0deg));
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(var(--rotation, 0deg));
+        opacity: 1;
+    }
+}
+
+.music-player {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.play-pause-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.play-pause-btn:hover {
+    transform: scale(1.1);
+}
+
+.play-pause-btn svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
+.song-info {
+    flex-grow: 1;
+    color: white;
+    font-weight: bold;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.progress-bar {
+    width: 60px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilos para la imagen del corazón */
+.heart-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg); /* Desrota la imagen para que esté derecha */
+    width: 100px; /* Tamaño de la imagen, puedes ajustarlo */
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 3; /* Asegúrate de que esté por encima de otros elementos */
+}
+ 
+.heart-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+ 
+.heart-image.show {
+    opacity: 1;
+}
+
+/* === NUEVOS ESTILOS PARA STICKERS FLOTANTES === */
+#sticker-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 4; /* Cámbialo a 4 para que esté sobre el corazón */
+}
+
+.floating-sticker {
+    position: absolute;
+    bottom: -150px; /* Inicia fuera de la pantalla por abajo */
+    width: 80px; /* Tamaño del sticker, ajústalo si quieres */
+    height: auto;
+    opacity: 0;
+    animation: float-and-fade linear forwards; /* 'forwards' mantiene el estado final */
+}
+
+@keyframes float-and-fade {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1; /* Aparece rápidamente */
+    }
+    100% {
+        transform: translateY(-100vh) rotate(30deg); /* Sube toda la pantalla y rota un poco */
+        opacity: 0; /* Se desvanece al final */
+    }
+}
+/* ================================================== */

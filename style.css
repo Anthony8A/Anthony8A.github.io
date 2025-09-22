@@ -1,0 +1,337 @@
+/* Configuración general (sin cambios) */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor principal y estrellas (sin cambios) */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #0c001c;
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                      radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                      radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+                      radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    animation: twinkle 5s infinite linear;
+}
+@keyframes twinkle {
+    from { background-position: 0 0, 40px 60px, 130px 270px, 70px 100px; }
+    to { background-position: -550px 0, -310px 60px, -120px 270px, -80px 100px; }
+}
+
+/* --- ESTILOS DEL REPRODUCTOR MODIFICADOS --- */
+.music-player {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: 90%;
+    max-width: 350px; /* Ancho máximo */
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre elementos */
+    color: white;
+    font-size: 14px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.music-player .icon {
+    font-size: 18px;
+    user-select: none;
+}
+.music-player .player-content {
+    flex-grow: 1; /* Hace que esta parte ocupe el espacio disponible */
+}
+.music-player .time {
+    opacity: 0.8;
+    font-size: 12px;
+}
+/* --- NUEVOS ESTILOS PARA LA BARRA DE PROGRESO --- */
+.progress-bar-container {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin-top: 5px;
+}
+.progress-bar {
+    width: 0%; /* La barra empieza vacía */
+    height: 100%;
+    background-color: white;
+    border-radius: 2px;
+}
+/* --- FIN DE CAMBIOS DEL REPRODUCTOR --- */
+
+/* Corazón y Mensajes (sin cambios) */
+.heart {
+    position: absolute;
+    cursor: pointer; /* <-- AÑADE ESTO para que aparezca la manito */
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    box-shadow: 0 0 50px red, 0 0 80px darkred;
+    animation: pulse 1.5s infinite;
+}
+.heart::before, .heart::after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    border-radius: 50%;
+    box-shadow: 0 0 50px red;
+}
+.heart::before { top: -75px; left: 0; }
+.heart::after { top: 0; left: 75px; }
+@keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+    50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.1); }
+}
+.message-bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    white-space: nowrap;
+}
+@keyframes float-1 {
+    0% { transform: translateY(50px) translateX(-50%); opacity: 0; }
+    25% { opacity: 1; } 75% { opacity: 1; }
+    100% { transform: translateY(-250px) translateX(-150px) rotate(-15deg); opacity: 0; }
+}
+@keyframes float-2 {
+    0% { transform: translateY(50px) translateX(0); opacity: 0; }
+    25% { opacity: 1; } 75% { opacity: 1; }
+    100% { transform: translateY(-200px) translateX(100px) rotate(10deg); opacity: 0; }
+}
+@keyframes float-3 {
+    0% { transform: translateX(-150px); opacity: 0; }
+    25% { opacity: 1; } 75% { opacity: 1; }
+    100% { transform: translateX(150px) translateY(-180px) rotate(20deg); opacity: 0; }
+}
+.anim-1 { animation: float-1 6s linear forwards; }
+.anim-2 { animation: float-2 5.5s linear forwards; }
+.anim-3 { animation: float-3 6.5s linear forwards; }
+
+/* --- NUEVOS ESTILOS PARA LAS FRASES AL HACER CLIC --- */
+
+.click-phrase {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.4);
+  color: #e0e0e0;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  user-select: none;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  /* CAMBIA ESTO */
+  animation: drop-down 2.5s ease-out forwards; /* Usa la nueva animación */
+}
+@keyframes heart-pop {
+  0% { transform: scale(0) translateY(0); opacity: 1; }
+  100% { transform: scale(1.2) translateY(-100px); opacity: 0; }
+}
+.heart-pop-anim {
+  position: absolute;
+  font-size: 24px;
+  color: red;
+  animation: heart-pop 1.5s ease-out forwards;
+  pointer-events: none; /* No bloqueará otros clics */
+  text-shadow: 0 0 5px black;
+}
+/* Animación para que las nuevas frases aparezcan y se desvanezcan */
+/* @keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+/* NUEVA ANIMACIÓN PARA LAS FRASES AL HACER CLIC */
+@keyframes drop-down {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(200px); /* Ajusta el valor para controlar la distancia de caída */
+  }
+}
+/* --- NUEVOS ESTILOS PARA LA CONFESIÓN --- */
+
+/* La nueva sección estará oculta al principio */
+.confession-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s;
+}
+
+.confession-section.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Estilo para la frase */
+.confession-text {
+    position: absolute;
+    top: 20%;
+    color: #e0e0e0;
+    font-size: 2rem;
+    text-align: center;
+    opacity: 0;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: opacity 1.5s ease-in;
+    transform: scale(0.9);
+}
+.confession-text.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Botón para la confesión */
+.confession-button {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(145deg, #ff4c4c, #e03232);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 25px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+    animation: pulse-button 2s infinite ease-in-out;
+}
+@keyframes pulse-button {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
+}
+
+/* --- ESTILOS DE LAS FLORES AMARILLAS --- */
+
+.flower-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50%; /* Controla la altura de las flores */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+/* Estilos para el tallo que aparece primero */
+.stem {
+    width: 10px;
+    height: 0; /* Empieza con altura 0 */
+    background: linear-gradient(to top, #329632, #64a864);
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    animation: grow-stem 1s ease-in forwards;
+}
+@keyframes grow-stem {
+    to { height: 60%; } /* Ajusta la altura final */
+}
+
+/* Estilos base de los pétalos */
+.flower {
+    position: absolute;
+    bottom: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle at center, #FFD700, #FFA500);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    box-shadow: 0 0 10px #FFD700;
+}
+
+/* Posición de cada flor */
+.flower1 { transform: rotate(0deg) scale(0); }
+.flower2 { transform: rotate(72deg) scale(0); }
+.flower3 { transform: rotate(144deg) scale(0); }
+.flower4 { transform: rotate(216deg) scale(0); }
+.flower5 { transform: rotate(288deg) scale(0); }
+
+
+
+/* Clases para animar cada flor con un retraso */
+.flower.show {
+    animation: bloom 1.5s ease-in forwards; /* Aumenta la duración a 1.5s */
+}
+.flower1.show { animation-delay: 1s; }
+.flower2.show { animation-delay: 1.2s; }
+.flower3.show { animation-delay: 1.4s; }
+.flower4.show { animation-delay: 1.6s; }
+.flower5.show { animation-delay: 1.8s; }
+
+/* Ocultar elementos */
+.hidden { display: none; }
+
+
+/* Animación para que aparezcan los pétalos */
+@keyframes bloom {
+    to {
+        width: 100px; /* Tamaño del pétalo */
+        height: 100px;
+        opacity: 1;
+        transform: scale(1) rotate(0);
+        box-shadow: 0 0 20px #FFEB82;
+    }
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 1;
+        transform: scale(1);
+    }
+}

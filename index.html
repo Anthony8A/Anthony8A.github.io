@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reanudamos la partida?...</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="video-container">
+        <div class="music-player">
+            <div class="icon">||</div>
+            <div class="player-content">
+                 <div class="text">Reanudamos la partida?...</div>
+                 <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                 </div>
+            </div>
+            <div class="time">
+                <span id="current-time">0:00</span> / <span id="total-duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="heart"></div>
+
+        <div id="heart" class="heart"></div>
+        <div id="messages-container"></div>
+    </div>
+
+    <a href="confesion.html" class="confession-button">Ola...</a>
+    
+    <audio id="background-song" src="assets/cancion.mp3" loop autoplay></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
